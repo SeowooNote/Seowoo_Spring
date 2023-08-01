@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+
+import javax.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,9 +86,17 @@ public class MainController {
      @PostMapping("/request-body")
      public String postRequestBody(
           // @RequestBody String requestBody
-          @RequestBody PostRequestBodyDto requestBody
+          @RequestBody @Valid PostRequestBodyDto requestBody
      ) {
           return "입력한 Request Body 는 " + requestBody.getName() + " 입니다.";
      }
+
+     // description : Response Entity - Response 의 상태 및 헤더, 본문(body)을 직접 제어할 수 있는 클래스 //
+     @GetMapping("/response-entity")
+     public ResponseEntity<String> getResponseEntity() {
+          return ResponseEntity.status(HttpStatus.FORBIDDEN).body("response Entity");
+     }
+          
+     
 
 }
