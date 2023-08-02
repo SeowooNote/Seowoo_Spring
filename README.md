@@ -45,5 +45,28 @@ Data Transfer Object로 일반 적인 소프트웨어 개발에서 데이터를 
 - 스프링 프레임워크에서 제공해 주는 유효성 검증 관련 인터페이스
 - 클라이언트로부터 전달 받은 데이터를 데이터타입, 길이, 형태를 검증하여 오류가 있는 경우 오류 메세지를 반환
 - ex. @NotNull, @NotEmpty, @NotBlank, @Max, @Min, @Size, ...
+
+|어노테이션 @|기능 설명|예|
+|---|---|---|
+|@NotNull|null 인지 검증|@NotNull Integer no;|
+|@NotEmpty|문자열이 null 혹은 빈문자열인지 검증|@NotEmpty String name;|
+|@NotBlank|문자열이 null, 빈문자열, 공백인지 검증|@NotBlank String  name;|
+|@Max|최대치 지정|@Max(100) Integer price;|
+|@Size|문자열이나 컬렉션이 지정한 사이즈 이하인지 검증|@Size(min=0, max=10) List<Integer> selected;|
+|@AssertTrue|값이 true 인지 검증|@AssertTrue  Boolean  empty;|
+|@AssertFalse|값이 false 인지 검증|@AssertFalse Boolean empty;|
+|@Pattern|지정한 정규 표현과 일치하는지 검증|@Pattern(regexp=”[a-zA-Z0-9]”) String id;|
+|@Range|지정한 숫자 내에 있는지 검증|@Range(min=1, max=10) Integer point;|
+|@DecimalMax|최대치 지정 (실수형)|@DecimalMax(”100.0”) BigDecimal val;|
+|@DecimalMin|최소치 지정 (실수형)|@DecimalMin(”10.0”) BigDecimal val;|
+|@Digits|정수부와 실수부 자리수 검증|@Digits(integer=3, fraction=1) BigDecimal  val;|
+|@Future|미래 날짜인지 검증|@Future Date date|
+|@Past|과거 날짜인지 검증|@Past Date date|
+|@Length|지정한 문자열의 길이 내에 있는지 검증|@Length(min =0, max=10) String name|
+|@Email|이메일 주소 형식인지 검증|@Email String email;|
+|@CreditCardNumber|신용카드 번호 형식인지 검증|@CreditiCarNumber String card;|
+|@URL|URL 형식인지 검증|@URL String url;|
+|@Valid|중첩 Form을 검증|@Valid SampleForm  sampleForm|
+
 ## CORS
 Cross-Origin Resource Sharing의 약어로, 웹 브라우저에서 실행되는 스크립트가 다른 출처의 리소스에 접근하는 것을 제어하는 보안 메커니즘
