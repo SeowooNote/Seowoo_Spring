@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.seowoo.basic.dto.request.PostRequestBodyDto;
+import com.seowoo.basic.service.MainService;
+
+import lombok.RequiredArgsConstructor;
 
 // description : Controller - 레이어드 아키텍처 상의 프레젠테이션 영역 //
 // description : 사용자로부터 입력을 받고 서비스 결과를 반환하는 영역 //
@@ -30,12 +33,20 @@ import com.seowoo.basic.dto.request.PostRequestBodyDto;
 // description : @RequestMapping - Request 의 URL 패턴에 따라 클래스 및 메소드를 결정하는 어노테이션 //
 // description : 예) http://localhost:8080 //
 @RequestMapping("")
+@RequiredArgsConstructor
 public class MainController {
+
+     // description : Spring Bean 으로 등록된 인스턴스를 IoC 로 DI 하기 위해서는 //
+     // description : @Autowired 를 이용한 필드객체로 DI, 생성자로 DI, setter 로 DI 방식을 사용해야함 //
+     // description : Spring 공식 문서에서는 생성자를 이용한 의존성 주입을 권장 //
+     // description : 생성자를 통한 의존성 주입은 @Autowired 를 지정할 필요가 없음 //
+     // description : 멤버변수를 필수 변수(final)로 지정하여 lombok 의 @RequiredArgsConstructor 로 쉽게 DI 할 수 있음 //
+     private final MainService mainService;
 
      // description : @RequestMapping 중 Get method 에 대해서만 인식 //
      @GetMapping("/")
      public String getMethod() {
-          return "get method";
+          return mainService.hello();
      }
 
      // description : @RequestMapping 중 Post method 에 대해서만 인식 //
