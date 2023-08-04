@@ -70,3 +70,32 @@ Data Transfer Object로 일반 적인 소프트웨어 개발에서 데이터를 
 
 ## CORS
 Cross-Origin Resource Sharing의 약어로, 웹 브라우저에서 실행되는 스크립트가 다른 출처의 리소스에 접근하는 것을 제어하는 보안 메커니즘
+
+## 요약해라
+데이터베이스 연결하기
+ORM : 객체 관계 매핑 - 객체와 RDBMS의 테이블을 자동으로 매핑
+         (클래스는 데이터베이스의 테이블과 매핑하기 위해 만들어진 것이 아니기 때문에 RDBMS의 테이블과 불일치가 발생 - ORM 은 이러한 불일치와 제약상황을 해결)
+JPA : ORM 라이브러리 / 표준 인터페이스
+	Hibernate : Java 객체와 데이터베이스 간의 매핑을 처리하는 JPA 구현체
+	Persistence : 지속성, 데이터를 영구적으로 저장, 애플리케이션의 실행이 종료된 후에도 사용 가능한 상태로 유지
+	
+	(build.gradle 파일 내부 dependencies 내에 작성)
+	JPA gradle 의존성 주입
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	MySQL Connector gradle 의존성 주입
+		runtimeOnly 'com.mysql:mysql-connector-j'
+
+	Entity : JPA를 사용하고자 할떄 데이터베이스 테이블과 매핑되는 Java객체
+		@Entity : Java 클래스를 JPA Entity로 표시하여 해당 클래스를 데이터베이스의 테이블과 매핑
+		@Table : JPA Entity 클래스와 데이터베이스 테이블간의 매핑을 설정하거나 수정할 때 사용
+		@Id : JPA Entity 클래스에서 Primary Key에 해당하는 필드를 표시하는 데 사용 / Entity 클래스에 필수로 하나 이상 포함
+		@GeneratedValue : Entity 클래스의 Primary Key에 대한 데이터 생성 전략을 지정하는 데 사용 / 주로 @Id 어노테이션이 지정된 필드와 함께 사용되며, 엔터티가 데이터베이스에 저장될 때 자동으로 생성되는 고유한 값을 설정하는 데 도움
+			GenerationType의 주요 전략
+				GenerationType.AUTO
+				GenerationType.IDENTITY
+				GenerationType.SEQUENCE
+				GenerationType.TABLE
+		@Column
+
+	Repository : 비즈니스 로직에서 데이터베이스에 접근하여 데이터베이스 작업을 담당하고, 결과를 Service 계층에 반환 / 인터페이스
+		@Repository
