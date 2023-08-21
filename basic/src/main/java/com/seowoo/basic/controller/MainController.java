@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.seowoo.basic.dto.request.PostRequestBodyDto;
+import com.seowoo.basic.provider.JwtProvider;
 import com.seowoo.basic.service.MainService;
 
 import lombok.RequiredArgsConstructor;
@@ -42,6 +44,8 @@ public class MainController {
      // description : 생성자를 통한 의존성 주입은 @Autowired 를 지정할 필요가 없음 //
      // description : 멤버변수를 필수 변수(final)로 지정하여 lombok 의 @RequiredArgsConstructor 로 쉽게 DI 할 수 있음 //
      private final MainService mainService;
+
+     private final JwtProvider jwtProvider;
 
      // description : @RequestMapping 중 Get method 에 대해서만 인식 //
      @GetMapping("/")
@@ -107,7 +111,28 @@ public class MainController {
      public ResponseEntity<String> getResponseEntity() {
           return ResponseEntity.status(HttpStatus.FORBIDDEN).body("response Entity");
      }
-          
-     
+
+     @GetMapping("/jwt/{sub}")
+     public String getJwt(
+       @PathVariable("sub") String sub
+     ) {
+       String jwt = jwtProvider.create(sub);
+       return jwt;
+     }
+   
+     @PostMapping("/jwt")
+     public String validateJwt(
+       @RequestParam("jwt") String jwt
+     ) {
+       String subject = jwtProvider.validate(jwt);
+       return subject;
+     }
+
+     @PostMapping("/principle")
+     public String principle (
+          @AuthenticationPrincipal String subject
+     ) {
+          return "토큰에 포함된 subject는 " + subject + "입니다.";
+     }
 
 }
